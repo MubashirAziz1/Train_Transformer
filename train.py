@@ -90,7 +90,7 @@ def get_or_build_tokenizer(config , ds , lang):
     return tokenizer
 
 def get_ds(config):
-    ds_raw = load_dataset("Helsinki-NLP/opus_books", f'{config['lang_src']} - {config['lang_tgt']}' , split = 'train')
+    ds_raw = load_dataset("Helsinki-NLP/opus_books", f"{config['lang_src']}-{config['lang_tgt']}", split='train')
     
     # build Tokenizer
     tokenizer_src = get_or_build_tokenizer(config , ds_raw , config['lang_src'])
