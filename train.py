@@ -3,7 +3,7 @@ import torch.nn as nn
 from torch.utils.data import DataLoader, Dataset, random_split
 from torch.utils.tensorboard import SummaryWriter
 
-from config import get_config , get_weights_file_path
+from config import get_config , get_weights_file_path , latest_weights_file_path
 
 from dataset import BillingualDataset, causal_mask
 from tqdm import tqdm
@@ -138,13 +138,27 @@ def train_model(config):
 
     initial_epoch = 0
     global_step = 0
-    if config['preload']:
-        model_filename = get_weights_file_path(config , config['preload'])
-        print(f"Preloading model {model_filename}")
+    preload = config['preload']
+    model_filename = latest_weights_file_path(config) if preload == 'latest' else get_weights_file_path(config, preload) if preload else None
+    if model_filename:
+        print(f'Preloading model {model_filename}')
         state = torch.load(model_filename)
+        model.load_state_dict(state['model_state_dict'])
         initial_epoch = state['epoch'] + 1
-        optimizer.load_state_dict(state['optimizer__state_dict'])
+        optimizer.load_state_dict(state['optimizer_state_dict'])
         global_step = state['global_step']
+    else:
+        print('No model to preload, starting from scratch')
+
+    # initial_epoch = 0
+    # global_step = 0
+    #if config['preload']:
+    #    model_filename = get_weights_file_path(config , config['preload'])
+    #    print(f"Preloading model {model_filename}")
+    #    state = torch.load(model_filename)
+    #    initial_epoch = state['epoch'] + 1
+    #    optimizer.load_state_dict(state['optimizer__state_dict'])
+    #    global_step = state['global_step']
 
     loss_fn = nn.CrossEntropyLoss(ignore_index=tokenizer_src.id_to_token('[PAD]') , label_smoothing=0.1).to(device)
     for epoch in range(initial_epoch , config['epoch_num']):
