@@ -161,7 +161,7 @@ def train_model(config):
     #    global_step = state['global_step']
 
     loss_fn = nn.CrossEntropyLoss(ignore_index=tokenizer_src.token_to_id('[PAD]') , label_smoothing=0.1).to(device)
-    for epoch in range(initial_epoch , config['epoch_num']):
+    for epoch in range(initial_epoch , config['num_epochs']):
        
         batch_iterator = tqdm(train_dataloader , desc = f"Processing epoch {epoch:02d}")
         for batch in batch_iterator:
