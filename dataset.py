@@ -63,7 +63,8 @@ class BillingualDataset(Dataset):
                 torch.tensor([dec_input_tokens] , dtype = torch.int64),
                 self.eos_token,
                 torch.tensor([self.pad_token]*dec_num_padding_tokens , dtype = torch.int64)
-            ]
+            ],
+            dim = 0
         )
 
         assert encoder_input.size(0) == self.seq_len
