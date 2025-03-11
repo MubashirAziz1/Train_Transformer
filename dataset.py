@@ -40,7 +40,7 @@ class BillingualDataset(Dataset):
         encoder_input = torch.cat(
             [
                 self.sos_token,
-                torch.tensor([enc_input_tokens] , dtype = torch.int64),
+                torch.tensor(enc_input_tokens , dtype = torch.int64),
                 self.eos_token,
                 torch.tensor([self.pad_token]*enc_num_padding_tokens , dtype = torch.int64)
             ],
@@ -51,7 +51,7 @@ class BillingualDataset(Dataset):
         decoder_input = torch.cat(
             [
                 self.sos_token,
-                torch.tensor([dec_input_tokens] , dtype = torch.int64),
+                torch.tensor(dec_input_tokens , dtype = torch.int64),
                 torch.tensor([self.pad_token]*dec_num_padding_tokens , dtype = torch.int64)
             ],
             dim = 0
@@ -60,7 +60,7 @@ class BillingualDataset(Dataset):
         # Only EOS to the label (what we expect from the decoder output)
         label = torch.cat(
             [
-                torch.tensor([dec_input_tokens] , dtype = torch.int64),
+                torch.tensor(dec_input_tokens , dtype = torch.int64),
                 self.eos_token,
                 torch.tensor([self.pad_token]*dec_num_padding_tokens , dtype = torch.int64)
             ],
