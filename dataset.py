@@ -24,8 +24,8 @@ class BillingualDataset(Dataset):
     
     def __getitem__(self, index:Any) -> Any:
         src_tgt_pair = self.ds[index]
-        self.src_text = src_tgt_pair['translation'][self.src_lang]
-        self.tgt_text = src_tgt_pair['translation'][self.tgt_lang]
+        src_text = src_tgt_pair['translation'][self.src_lang]
+        tgt_text = src_tgt_pair['translation'][self.tgt_lang]
 
         enc_input_tokens = self.tokenizer_src.encode(self.src_text).ids
         dec_input_tokens = self.tokenizer_tgt.encode(self.tgt_text).ids
