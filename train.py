@@ -19,8 +19,8 @@ from pathlib import Path
 from model import build_transformer
 
 def greedy_decode(model , source , source_mask , tokenizer_src , tokenizer_tgt , max_len , device):
-    sos_idx = tokenizer_tgt.token_to_ids('[SOS]')
-    eos_idx = tokenizer_tgt.token_to_ids('[EOS]')
+    sos_idx = tokenizer_tgt.token_to_id('[SOS]')
+    eos_idx = tokenizer_tgt.token_to_id('[EOS]')
 
     # Precompute the encoder input and reuse it for every token we get from the decoder
     encoder_output = model.encode(source , source_mask)
