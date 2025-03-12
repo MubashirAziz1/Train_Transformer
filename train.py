@@ -215,7 +215,7 @@ from model import build_transformer
 from dataset import BilingualDataset, causal_mask
 from config import get_config, get_weights_file_path, latest_weights_file_path
 
-import torchtext.datasets as datasets
+#import torchtext.datasets as datasets
 import torch
 import torch.nn as nn
 from torch.utils.data import Dataset, DataLoader, random_split
@@ -233,7 +233,7 @@ from tokenizers.models import WordLevel
 from tokenizers.trainers import WordLevelTrainer
 from tokenizers.pre_tokenizers import Whitespace
 
-import torchmetrics
+#import torchmetrics
 from torch.utils.tensorboard import SummaryWriter
 
 def greedy_decode(model, source, source_mask, tokenizer_src, tokenizer_tgt, max_len, device):
@@ -322,17 +322,17 @@ def run_validation(model, validation_ds, tokenizer_src, tokenizer_tgt, max_len, 
         writer.add_scalar('validation cer', cer, global_step)
         writer.flush()
 
-        # Compute the word error rate
-        metric = torchmetrics.WordErrorRate()
-        wer = metric(predicted, expected)
-        writer.add_scalar('validation wer', wer, global_step)
-        writer.flush()
+        # # Compute the word error rate
+        # metric = torchmetrics.WordErrorRate()
+        # wer = metric(predicted, expected)
+        # writer.add_scalar('validation wer', wer, global_step)
+        # writer.flush()
 
-        # Compute the BLEU metric
-        metric = torchmetrics.BLEUScore()
-        bleu = metric(predicted, expected)
-        writer.add_scalar('validation BLEU', bleu, global_step)
-        writer.flush()
+        # # Compute the BLEU metric
+        # metric = torchmetrics.BLEUScore()
+        # bleu = metric(predicted, expected)
+        # writer.add_scalar('validation BLEU', bleu, global_step)
+        # writer.flush()
 
 def get_all_sentences(ds, lang):
     for item in ds:
