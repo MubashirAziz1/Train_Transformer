@@ -11,7 +11,9 @@ class InputEmbedding(nn.Module):
         self.embedding = nn.Embedding(vocab_size , d_model)
 
     def forward(self , x):
-        return self.embedding(x)*math.sqrt(self.d_model)
+        embedded = self.embedding(x) * math.sqrt(self.d_model)
+        print("Embedding output shape:", embedded.shape)  # Debugging
+        return embedded
     
     
 class PositionalEncoding(nn.Module):
@@ -37,18 +39,6 @@ class PositionalEncoding(nn.Module):
     def forward(self , x):
         x = x + (self.pe[: , :x.shape[1],:]).requires_grad(False)
         return self.dropout(x)
-
-def forward(self, x):
-    print("x shape:", x.shape)
-    mean = x.mean(dim=-1, keepdim=True)
-    std = x.std(dim=-1, keepdim=True)
-    print("mean shape:", mean.shape)
-    print("std shape:", std.shape)
-    print("alpha shape:", self.alpha.shape)
-    print("bias shape:", self.bias.shape)
-    result = self.alpha * (x - mean) / (std + self.eps) + self.bias
-    print("result shape:", result.shape)
-    return result
 
 class LayerNormalization(nn.Module):
 
