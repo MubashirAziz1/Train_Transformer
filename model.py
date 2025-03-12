@@ -37,7 +37,7 @@ class PositionalEncoding(nn.Module):
         self.register_buffer('pe' , pe)
 
     def forward(self , x):
-        x = x + (self.pe[: , :x.shape[1],:]).requires_grad(False)
+        x = x + (self.pe[: , :x.shape[1],:]).requires_grad_(False)
         return self.dropout(x)
 
 class LayerNormalization(nn.Module):
