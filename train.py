@@ -1,4 +1,3 @@
-#1st Code
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader, Dataset, random_split
@@ -47,12 +46,12 @@ def greedy_decode(model , source , source_mask , tokenizer_src , tokenizer_tgt ,
             break
     
     return decoder_input.squeeze(0)
-#Hereeeee
+
 def run_validation(model, tokenizer_src , tokenizer_tgt , val_ds , max_len , device , print_msg , gloabal_state , summary, num_examples = 2):
     model.eval()
     count = 0
     console_width = 80
-#Hereeee
+
     with torch.no_grad:
         for batch in val_ds:
             count += 1
@@ -62,7 +61,7 @@ def run_validation(model, tokenizer_src , tokenizer_tgt , val_ds , max_len , dev
             assert encoder_input.size(0) == 1, "Batch Size must be 1 for validation."
 
             model_out = greedy_decode(model , encoder_input , encoder_mask , tokenizer_src , tokenizer_tgt , max_len , device)
-#Hereee
+
             source_text = batch['src_text'][0]
             target_text = batch['tgt_text'][0]
             model_out_text = tokenizer_tgt.decode(model_out.detach().cpu().numpy())
@@ -80,7 +79,7 @@ def get_all_sentences(ds , lang):
 def get_or_build_tokenizer(config, ds, lang):
     tokenizer_path = Path(config['tokenizer_file'].format(lang))
     if not Path.exists(tokenizer_path):
-        # Most code taken from: https://huggingface.co/docs/tokenizers/quicktour
+        
         tokenizer = Tokenizer(WordLevel(unk_token="[UNK]"))
         tokenizer.pre_tokenizer = Whitespace()
         trainer = WordLevelTrainer(special_tokens=["[UNK]", "[PAD]", "[SOS]", "[EOS]"], min_frequency=2)
@@ -158,8 +157,6 @@ def train_model(config):
         model.train()
         batch_iterator = tqdm(train_dataloader , desc = f"Processing epoch {epoch:02d}")
         for batch in batch_iterator:
-            
-
             encoder_input = batch['encoder_input'].to(device) # (B , Seq_len)
             decoder_input = batch['decoder_input'].to(device) # (B , Seq_len)
             encoder_mask = batch['encoder_mask'].to(device) # (B, 1, 1, Seq_len)
