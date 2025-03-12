@@ -52,7 +52,7 @@ def run_validation(model, tokenizer_src , tokenizer_tgt , val_ds , max_len , dev
     count = 0
     console_width = 80
 
-    with torch.no_grad:
+    with torch.no_grad():
         for batch in val_ds:
             count += 1
             encoder_input = batch['encoder_input'].to(device)
