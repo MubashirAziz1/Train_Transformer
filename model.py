@@ -11,9 +11,7 @@ class InputEmbedding(nn.Module):
         self.embedding = nn.Embedding(vocab_size , d_model)
 
     def forward(self , x):
-        embedded = self.embedding(x) * math.sqrt(self.d_model)
-        print("Embedding output shape:", embedded.shape)  # Debugging
-        return embedded
+        return self.embedding(x) * math.sqrt(self.d_model)
     
     
 class PositionalEncoding(nn.Module):
@@ -54,15 +52,15 @@ class LayerNormalization(nn.Module):
         # return self.alpha*(x-mean) / (std+self.eps)  + self.beta
         x = x.float()
     
-        print("x shape:", x.shape)
+        #print("x shape:", x.shape)
         mean = x.mean(dim=-1, keepdim=True)
         std = x.std(dim=-1, keepdim=True)
-        print("mean shape:", mean.shape)
-        print("std shape:", std.shape)
-        print("alpha shape:", self.alpha.shape)
-        print("bias shape:", self.beta.shape)
+        #print("mean shape:", mean.shape)
+        #print("std shape:", std.shape)
+        #print("alpha shape:", self.alpha.shape)
+        #print("bias shape:", self.beta.shape)
         result = self.alpha * (x - mean) / (std + self.eps) + self.beta
-        print("result shape:", result.shape)
+        #print("result shape:", result.shape)
         return result
 
 class FeedForwardBlock(nn.Module):
@@ -214,10 +212,10 @@ class Transformer(nn.Module):
         src = self.src_pos(src)
         return self.encoder(src , src_mask)
 
-    def decode(self , encoder_output , src , tgt , src_mask , tgt_mask):
+    def decode(self , encoder_output , src_mask , tgt ,  tgt_mask):
         tgt = self.tgt_embed(tgt)
         tgt = self.tgt_pos(tgt)
-        return self.decoder(encoder_output , src , tgt , src_mask , tgt_mask)
+        return self.decoder(encoder_output , tgt , src_mask , tgt_mask)
 
     def projection(self , x):
         return self.projection_layer(x)
