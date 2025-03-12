@@ -37,7 +37,7 @@ def greedy_decode(model , source , source_mask , tokenizer_src , tokenizer_tgt ,
         out = model.decode(encoder_output , source_mask , decoder_input , decoder_mask)
 
         #Get the next token
-        prob = model.project(out[:,-1])
+        prob = model.projection(out[:,-1])
         _ , next_word = torch.max(prob , dim=1)
 
         decoder_input = torch.cat([decoder_input , torch.empty(1,1).type_as(source).fill_(next_word.item()).to(device)] , dim=1)
