@@ -47,20 +47,10 @@ class LayerNormalization(nn.Module):
         self.beta = nn.Parameter(torch.zeros(1)) # Added
     
     def forward(self , x):
-        # mean = x.mean(dim = -1 , keepdim = True)
-        # std = x.std(dim = -1 , keepdim = True)
-        # return self.alpha*(x-mean) / (std+self.eps)  + self.beta
         x = x.float()
-    
-        #print("x shape:", x.shape)
         mean = x.mean(dim=-1, keepdim=True)
         std = x.std(dim=-1, keepdim=True)
-        #print("mean shape:", mean.shape)
-        #print("std shape:", std.shape)
-        #print("alpha shape:", self.alpha.shape)
-        #print("bias shape:", self.beta.shape)
         result = self.alpha * (x - mean) / (std + self.eps) + self.beta
-        #print("result shape:", result.shape)
         return result
 
 class FeedForwardBlock(nn.Module):
