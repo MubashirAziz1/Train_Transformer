@@ -231,6 +231,7 @@ from tokenizers.models import WordLevel
 from tokenizers.trainers import WordLevelTrainer
 from tokenizers.pre_tokenizers import Whitespace
 
+import numpy as np
 #import torchmetrics
 from torch.utils.tensorboard import SummaryWriter
 
