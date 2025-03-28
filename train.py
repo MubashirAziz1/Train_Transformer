@@ -74,6 +74,10 @@ def run_validation(model, tokenizer_src , tokenizer_tgt , val_ds , max_len , dev
             print_msg(f'SOURCE : {source_text}')
             print_msg(f'TARGET : {target_text}')
             print_msg(f'PREDICTED : {model_out_text}')
+
+            if count == num_examples:
+                 print_msg('-'*console_width)
+                 break
 #Hereee
 
 def get_all_sentences(ds , lang):
