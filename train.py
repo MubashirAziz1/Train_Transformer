@@ -14,6 +14,8 @@ from tokenizers.models import WordLevel
 from tokenizers.trainers import WordLevelTrainer
 from tokenizers.pre_tokenizers import Whitespace
 
+import os
+
 import numpy as np
 
 from pathlib import Path
@@ -195,6 +197,7 @@ def train_model(config):
 
         
         model_filename = get_weights_file_path(config , f"{epoch:02d}")
+        os.makedirs(os.path.dirname(model_filename), exist_ok=True)
         torch.save({
             'epoch': epoch,
             'model_state_dict': model.state_dict,
