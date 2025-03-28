@@ -354,7 +354,7 @@ def get_ds(config):
     # It only has the train split, so we divide it overselves
     ds_raw = load_dataset(f"{config['datasource']}", f"{config['lang_src']}-{config['lang_tgt']}", split='train')
     #Take a small data
-    indices = np.random.choice(len(ds_raw) , int(0.001 * len(ds_raw)) , replace=False)
+    indices = np.random.choice(len(ds_raw) , int(0.1 * len(ds_raw)) , replace=False)
     ds_raw = ds_raw.select(indices)
     # Build tokenizers
     tokenizer_src = get_or_build_tokenizer(config, ds_raw, config['lang_src'])
