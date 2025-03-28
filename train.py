@@ -14,6 +14,8 @@ from tokenizers.models import WordLevel
 from tokenizers.trainers import WordLevelTrainer
 from tokenizers.pre_tokenizers import Whitespace
 
+import numpy as np
+
 from pathlib import Path
 
 from model import build_transformer
@@ -92,6 +94,9 @@ def get_or_build_tokenizer(config, ds, lang):
 def get_ds(config):
 
     ds_raw = load_dataset(f"{config['datasource']}", f"{config['lang_src']}-{config['lang_tgt']}", split='train')
+    #Take a small data
+    indices = np.random.choice(len(ds_raw) , int(0.001 * len(ds_raw)) , replace=False)
+    ds_raw = ds_raw.select(indices)
     # build Tokenizer
     tokenizer_src = get_or_build_tokenizer(config , ds_raw , config['lang_src'])
     tokenizer_tgt = get_or_build_tokenizer(config , ds_raw , config['lang_tgt'])
